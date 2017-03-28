@@ -18,6 +18,21 @@ import static questionsquizz.QuestionsQuizz.questions;
  */
 public class computer {
     
+     public static int numGen(ArrayList<Integer> array, int max){ 
+     
+      int random = (int)(Math.random()*max);
+      
+      for ( int index=0; index<array.size(); index++){
+          if (array.get(index)==random){
+              return numGen(array,max);
+              
+          }
+      }
+      array.add(random);
+      return random;
+     }
+
+    
     public static void main(String[] args) throws IOException, InterruptedException {
         
         Scanner scan = new Scanner(System.in);
@@ -51,10 +66,23 @@ public class computer {
       System.out.println("Choose a level of difficulty");
       System.out.println("Press:\n\t\tH for hard\n\t\tM for medium\n\t\tE for easy");
       String level = scan.next();
+         
+      int MAX_index, MIN_index;
+     // int[] index_list = new int[questions.length];
+      ArrayList<Integer> index_list = new ArrayList<Integer>();
+      MAX_index=questions.length;
+      MIN_index=0;
+      
+      
+      
+      
+
         
         for (int index =0; index<questions.length; index++)
         {
-        System.out.println(questions[index]);
+        computer number =new computer();
+        int b = number.numGen(index_list,questions.length);
+        System.out.println(questions[b]);
         System.out.println("To submit your answer just write it down and press enter");
         System.out.println("To cheat press C");
         System.out.println("To skip question press S");
@@ -72,7 +100,7 @@ public class computer {
             case ("C"):
                 actualcheated++;
                 actualscore_computer++;
-                System.out.println(answers[index]);
+                System.out.println(answers[b]);
                 break;
             case ("s"):    
             case ("S"):
@@ -84,7 +112,7 @@ public class computer {
         }
                 }
         
-        else if((action.equalsIgnoreCase(answers[index])))
+        else if((action.equalsIgnoreCase(answers[b])))
         {actualscore++;
         System.out.println("You got it right!");}
         
@@ -102,10 +130,10 @@ public class computer {
                     int MAX, MIN;
                     MAX=4;
                     MIN=1;
-                    int number = ((int)(Math.random()*(MAX+1-MIN)))+MIN;
+                    int number_e = ((int)(Math.random()*(MAX+1-MIN)))+MIN;
 
 
-                     switch(number){
+                     switch(number_e){
 
                         case 1:
                             actualscore_computer++;
