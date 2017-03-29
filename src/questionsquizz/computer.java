@@ -18,29 +18,16 @@ import static questionsquizz.QuestionsQuizz.questions;
  */
 public class computer {
     
-     public static int numGen(ArrayList<Integer> array, int max){ 
-     
-      int random = (int)(Math.random()*max);
-      
-      for ( int index=0; index<array.size(); index++){
-          if (array.get(index)==random){
-              return numGen(array,max);
-              
-          }
-      }
-      array.add(random);
-      return random;
-     }
-
-    
+    public boolean correct_game_type(String type){
+        return (type.equalsIgnoreCase("F"))||(type.equalsIgnoreCase("C"));
+    }
+    public boolean correct_level (String lvl){
+        return (lvl.equalsIgnoreCase("H")||lvl.equalsIgnoreCase("E")||lvl.equalsIgnoreCase("M"));
+    }
+   
     public static void main(String[] args) throws IOException, InterruptedException {
         
         Scanner scan = new Scanner(System.in);
-        
-        //ArrayList<Integer> scores = new ArrayList<Integer>();
-        //ArrayList<Integer> failed = new ArrayList<Integer>();
-        //ArrayList<Integer> skipped = new ArrayList<Integer>();
-       // ArrayList<Integer> cheated = new ArrayList<Integer>();
         
         int actualscore, actualfailed, actualskipped, actualcheated;
         actualscore=0;
@@ -49,38 +36,74 @@ public class computer {
         actualcheated=0;
         
         int actualscore_computer, actualfailed_computer;
-        
-        //ArrayList<Integer> scores_computer = new ArrayList<Integer>();
-        //ArrayList<Integer> failed_computer = new ArrayList<Integer>();
+       
         actualscore_computer=0;
         actualfailed_computer=0;
-        
        
-      QuestionsQuizz q =new QuestionsQuizz();
-      q.read_answers("/Users/margaridaferreira/Desktop/answerscapitals.txt");
-      QuestionsQuizz a =new QuestionsQuizz();
-      a.read_questions("/Users/margaridaferreira/Desktop/capitals.txt");
       
+      System.out.println("*************************************************************************");
+      System.out.println("\t\t\tWELCOME TO YOUR QUIZZ");
+      System.out.println("*************************************************************************");
+      
+      String game_type;
+      System.out.println("\t\t\tWhat quizz would you like to play?");
+      System.out.println("\t\t\tCapitals? (enter c)");
+      System.out.println("\t\t\tFood? (enter f)");
+      game_type = scan.next();
+      
+      
+      computer m = new computer();
+      
+      while (m.correct_game_type(game_type)==false)
+      {System.out.print("\nIncorrect Input!\nEnter a valid letter! ");
+      System.out.println("- Only C or F allowed");
+      game_type = scan.next();}
+      
+      if (m.correct_game_type(game_type)==true){
+                if (game_type.equalsIgnoreCase("C"))
+                { 
+                QuestionsQuizz q =new QuestionsQuizz();
+                q.read_answers("/Users/margaridaferreira/Desktop/answerscapitals.txt");
+                QuestionsQuizz a =new QuestionsQuizz();
+                a.read_questions("/Users/margaridaferreira/Desktop/capitals.txt");
+                }
+                if (game_type.equalsIgnoreCase("F"))
+                {
+                QuestionsQuizz q =new QuestionsQuizz();
+                q.read_answers("/Users/margaridaferreira/Desktop/foodanswers.txt");
+                QuestionsQuizz a =new QuestionsQuizz();
+                a.read_questions("/Users/margaridaferreira/Desktop/foodquestions.txt");
+                }
+    }
     
-   
-      System.out.println("Choose a level of difficulty");
+      
+     
+     
+    
+      String level;
+      System.out.println("\nChoose a level of difficulty");
       System.out.println("Press:\n\t\tH for hard\n\t\tM for medium\n\t\tE for easy");
-      String level = scan.next();
+      level = scan.next();
+      
+      
+      while (m.correct_level(level)==false){
+      System.out.print("Incorrect Input!\n Enter a valid letter! ");
+      System.out.println("- Only H M or E allowed");
+      level = scan.next();
+      }
+      
          
       int MAX_index, MIN_index;
-     // int[] index_list = new int[questions.length];
+    
+      
       ArrayList<Integer> index_list = new ArrayList<Integer>();
       MAX_index=questions.length;
       MIN_index=0;
       
-      
-      
-      
-
         
         for (int index =0; index<questions.length; index++)
         {
-        computer number =new computer();
+        QuestionsQuizz number =new QuestionsQuizz();
         int b = number.numGen(index_list,questions.length);
         System.out.println(questions[b]);
         System.out.println("To submit your answer just write it down and press enter");
